@@ -126,7 +126,7 @@
                     <td>Rp. {{ number_format($value['PEMBAYARAN'], 2) }}</td>
                     <td>{{ $value['STATUS_PEMBAYARAN'] }}</td>
                     <td>
-                        <a href="#" data-toggle="tooltip" data-original-title="Detail" > <i class="fa fa-search text-inverse m-r-10"></i> </a>
+                        <a href="{{ route('mahasiswa.detail', ['nim' => $value->NIM]) }}" data-toggle="tooltip" data-original-title="Detail" > <i class="fa fa-search text-inverse m-r-10"></i> </a>
                     </td>
                 </tr>
             @endforeach

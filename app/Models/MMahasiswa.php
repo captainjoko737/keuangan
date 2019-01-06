@@ -31,6 +31,8 @@ class MMahasiswa extends Model
         'POTONGAN'
     ];
 
+    public $timestamps = false;
+
     public function summary()
      {
           return $this->hasMany('App\Models\Mutasi', 'NIM', 'NIM');

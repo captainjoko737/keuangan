@@ -21,7 +21,7 @@
                 </li>
                 <li><a href="{{ url('/mahasiswa')}}"><i class="fa fa-users"></i> Mahasiswa</a></li>
                 <li><a href="{{ url('/tagihan')}}"><i class="fa fa-money"></i> Tagihan</a></li>
-                <li><a href="{{ url('/admin/')}}"><i class="fa fa-user"></i> Pengguna</a></li>
+                <li><a href="{{ url('/pengguna')}}"><i class="fa fa-user"></i> Pengguna</a></li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

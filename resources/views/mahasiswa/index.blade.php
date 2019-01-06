@@ -24,9 +24,17 @@
                                 <div class="tab-pane" id="{{ $value->ANGKATAN }}BISA" role="tabpanel"></div>
                             @endforeach
                         </div>
-                        <div class="table-responsive m-t-40">
-                            
-                        </div>
+                        @if (session('status'))
+                            <div class="alert alert-success col-md-6">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger col-md-6">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

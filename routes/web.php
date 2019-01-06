@@ -20,8 +20,8 @@ Route::group(['middleware' => 'web'], function () {
 
 	Route::get('/mahasiswa', 'Mahasiswa@mahasiswa')->name('mahasiswa');
 	Route::get('/list/mahasiswa', 'Mahasiswa@mahasiswa')->name('list.mahasiswa');
-
-	
+	Route::get('/mahasiswa/detail', 'Mahasiswa@detail')->name('mahasiswa.detail');
+	Route::post('/mahasiswa/save', 'Mahasiswa@save')->name('mahasiswa.save');
 
 	# TAGIHAN
 	Route::group(['prefix' => 'tagihan'], function() {
@@ -31,6 +31,16 @@ Route::group(['middleware' => 'web'], function () {
 		Route::get('/edit', 'Tagihan@edit')->name('tagihan.edit');
 		Route::post('/save', 'Tagihan@save')->name('tagihan.save');
 		Route::delete('/delete', 'Tagihan@drop')->name('tagihan.drop');
+	});
+
+	# PENGGUNA
+	Route::group(['prefix' => 'pengguna'], function() {
+		Route::get('/', 'Pengguna@index')->name('pengguna');
+		Route::get('/create', 'Pengguna@create')->name('pengguna.create');
+		Route::post('/store', 'Pengguna@store')->name('pengguna.store');
+		Route::get('/edit', 'Pengguna@edit')->name('pengguna.edit');
+		Route::post('/save', 'Pengguna@save')->name('pengguna.save');
+		Route::delete('/delete', 'Pengguna@drop')->name('pengguna.drop');
 	});
 	
 	Route::group(['prefix' => 'laporan'], function() {

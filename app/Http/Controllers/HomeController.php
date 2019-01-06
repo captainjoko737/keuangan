@@ -12,6 +12,7 @@ use App\Models\MProgramStudi;
 use App\Models\MJenisTransaksi;
 use App\Models\MPengguna;
 use App\Models\MTransaksi;
+use App\Models\MTagihan;
 use Auth;
 use View;
 use App\Dashboard\Controllers;
@@ -40,12 +41,83 @@ class HomeController extends Controller
     {
         $data['title'] = 'Dashboard';
 
-        #Mahasiswa Aktif diambil dari table mahasiswa di bawah semester 14
-        $data['mahasiswa_aktif'] = MMahasiswa::where('SEMESTER', '<=', 8)->get()->count();
+        
+        $mhsAktif = 0;
+        $mhsTidakAktif = 0;
+        $mhsSudahBayar = 0;
+        $mhsBelumBayar = 0;
 
-        # Mahasiswa Tidak Aktif diambil dari table mahasiswa di atas semester 14
-        $data['mahasiswa_tidak_aktif'] = MMahasiswa::where('SEMESTER', '>', 8)->get()->count();
+        $tagihan = MTagihan::all();
 
+        $mahasiswaResult = MMahasiswa::select('NIM', 'NAMA', 'ANGKATAN', 'SEMESTER', 'AKADEMIK', 'STATUS', 'POTONGAN')->get();
+
+        foreach ($mahasiswaResult as $key => $value) {
+
+            if ($value['STATUS'] == 1) {
+
+                $mhsAktif += 1;
+                $mahasiswaResult[$key]['STATUS'] = 1;
+
+                $nim      = $value['NIM'];
+                $angkatan = $value['ANGKATAN'];
+                $semester = $value['SEMESTER'];
+                $akademik = $value['AKADEMIK'];
+
+                # GET JUMLAH TAGIHAN
+
+                foreach ($tagihan as $keys => $values) {
+                    
+                    # ADD JUMLAH TAGINAN
+                    if ($angkatan == $values['ANGKATAN'] && $semester == $values['SEMESTER'] && $akademik == $values['AKADEMIK']) {
+
+                        $mahasiswaResult[$key]['TAGIHAN'] = $values['JUMLAH'] - $value['POTONGAN'];
+
+                        # GET JUMLAH BAYARAN DI SEMESTER INI
+
+                        $pembayaran = MMutasi::where('NIM', $nim)->where('SEMESTER', $semester)->where('TAHUN', $akademik)->sum('JUMLAH');
+
+                        if ($pembayaran >= $values['JUMLAH'] - $value['POTONGAN']) {
+                            $mahasiswaResult[$key]['STATUS_PEMBAYARAN'] = 'LUNAS'; 
+                        }else{
+                            $mahasiswaResult[$key]['STATUS_PEMBAYARAN'] = 'BELUM LUNAS';
+                        }
+
+                        $mahasiswaResult[$key]['PEMBAYARAN'] = $pembayaran; 
+
+                        break;
+                    }else{
+                        $mahasiswaResult[$key]['TAGIHAN'] = 0;
+                        $mahasiswaResult[$key]['STATUS_PEMBAYARAN'] = ''; 
+                        $mahasiswaResult[$key]['PEMBAYARAN'] = 0;
+                    }
+
+                }
+            }else{
+                $mhsTidakAktif += 1;
+                $mahasiswaResult[$key]['STATUS'] = 0;
+                $mahasiswaResult[$key]['TAGIHAN'] = 0;
+                $mahasiswaResult[$key]['STATUS_PEMBAYARAN'] = ''; 
+                $mahasiswaResult[$key]['PEMBAYARAN'] = 0;
+            }
+
+        }
+
+        foreach ($mahasiswaResult as $key => $value) {
+            
+            if ($value['STATUS'] == 1) {
+                if ($value['STATUS_PEMBAYARAN'] == 'LUNAS') {
+                    $mhsSudahBayar += $value['PEMBAYARAN'];
+                }else{
+                    $mhsBelumBayar += $value['TAGIHAN'] - $value['PEMBAYARAN'];
+                }
+            }
+
+        }
+
+        $data['mahasiswa_aktif'] = $mhsAktif;
+        $data['mahasiswa_tidak_aktif'] = $mhsTidakAktif;
+        $data['mahasiswa_sudah_bayar'] = $mhsSudahBayar;
+        $data['mahasiswa_belum_bayar'] = $mhsBelumBayar;
 
         # BAYARAN PER TAHUN 
         $resultMutasi = MMutasi::select(DB::raw("YEAR(TGL_TRANS) as year, SUM(JUMLAH) as JUMLAH"))

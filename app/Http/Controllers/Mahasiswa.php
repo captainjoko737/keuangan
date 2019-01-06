@@ -110,8 +110,7 @@ class Mahasiswa extends Controller
         $data['title'] = 'Laporan Per Mahasiswa';
 
         $data['tahun'] = MMahasiswa::distinct('ANGKATAN')->select('ANGKATAN')->where('ANGKATAN', '>=', 2000)->orderBy('ANGKATAN', 'DESC')->get();
-        // return $tahun;
-
+        
         if ($request->angkatan) {
             
             $data['id'] = $request->angkatan;
@@ -124,7 +123,7 @@ class Mahasiswa extends Controller
 
             foreach ($mahasiswa as $key => $value) {
 
-                if ($value['SEMESTER'] <= 8) {
+                if ($value['STATUS'] == 1) {
                     $mahasiswa[$key]['STATUS'] = 1;
 
                     $nim      = $value['NIM'];
@@ -177,6 +176,35 @@ class Mahasiswa extends Controller
 
     	return view('mahasiswa.index', $data);
     	
+    }
+
+    public function detail() {
+
+        $data['title'] = 'Detail Mahasiswa';
+
+        $data['result'] = MMahasiswa::where('NIM', request()->nim)->first();
+        
+        return view('mahasiswa.detail', $data);
+    }
+
+    public function save() {
+// return request()->all();
+
+        $data['title'] = 'Detail Mahasiswa';
+
+        $mahasiswa = MMahasiswa::where('NIM', request()->NIM)
+                        ->update([
+                            'STATUS' => request()->STATUS,
+                            'POTONGAN' => request()->POTONGAN,
+                        ]);
+
+        // session()->flash('status', 'data mahasiswa berhasil diperbaharui !');
+        // $data['result'] = MMahasiswa::where('NIM', request()->NIM)->first();
+
+        // return view('mahasiswa.detail', $data);
+
+       
+        return redirect()->route('list.mahasiswa');
     }
 
 }

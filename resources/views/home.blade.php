@@ -27,7 +27,7 @@
                                 <div class="m-r-10 align-self-center"><img src="{{ url('public/assets/images/icon/income-w.png') }}" alt="Income" /></div>
                                 <div class="align-self-center">
                                     <h6 class="text-white m-t-10 m-b-0"><strong>Mahasiswa Lunas</strong></h6>
-                                    <h5 class="m-t-0 text-white"><strong>Rp. 30.100.00</strong></h5></div>
+                                    <h5 class="m-t-0 text-white"><strong>Rp. {{ number_format($mahasiswa_sudah_bayar, 2) }} </strong></h5></div>
                             </div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                                 <div class="m-r-10 align-self-center"><img src="{{ url('public/assets/images/icon/income-w.png') }}" alt="Income" /></div>
                                 <div class="align-self-center">
                                     <h6 class="text-white m-t-10 m-b-0"><strong>Tunggakan</strong></h6>
-                                    <h5 class="m-t-0 text-white"><strong>Rp. 953.230.00</strong></h5></div>
+                                    <h5 class="m-t-0 text-white"><strong>Rp. {{ number_format($mahasiswa_belum_bayar, 2) }}</strong></h5></div>
                             </div>
                         </div>
                     </div>
