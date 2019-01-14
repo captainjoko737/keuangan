@@ -18,7 +18,13 @@ class MTagihan extends Model
         'ANGKATAN',  
         'SEMESTER',  
         'JUMLAH',  
+        'KODE_PROGSTUDI',
         'AKADEMIK',
         
     ];
+
+    public function prodi()
+    {
+        return $this->hasOne('App\Models\MProgramStudi', 'KODE_PROGSTUDI', 'KODE_PROGSTUDI');
+    }
 }

@@ -39,8 +39,8 @@
                                     <div class="form-group">
                                         <h5>SEMESTER</h5>
                                         <select class="select2 form-control custom-select" name="semester" style="width: 30%; height:56px;" required>
+                                            <option> </option>
                                             @foreach ($semester as $key => $value)
-                                                <option> </option>
                                                 <option value="{{ $value->SEMESTER }}">{{ $value->SEMESTER }}</option>
                                             @endforeach
                                         </select>
@@ -51,9 +51,21 @@
                                     <div class="form-group">
                                         <h5>AKADEMIK</h5>
                                         <select class="select2 form-control custom-select" name="akademik" style="width: 30%;" required>
+                                            <option> </option>
                                             @foreach ($akademik as $key => $value)
-                                                <option> </option>
                                                 <option value="{{ $value->AKADEMIK }}">{{ $value->AKADEMIK }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <h5>KODE PROGRAM STUDI</h5>
+                                        <select class="select2 form-control custom-select" name="kode_prodi" style="width: 30%; height:56px;" required>
+                                            <option> </option>
+                                            @foreach ($prodi as $key => $value)
+                                                <option value="{{ $value->KODE_PROGSTUDI }}">{{ $value->KODE_PROGSTUDI }}</option>
                                             @endforeach
                                         </select>
                                     </div>

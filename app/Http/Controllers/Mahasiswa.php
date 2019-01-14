@@ -130,13 +130,51 @@ class Mahasiswa extends Controller
                     $angkatan = $value['ANGKATAN'];
                     $semester = $value['SEMESTER'];
                     $akademik = $value['AKADEMIK'];
+                    $prodi    = $value['KODE_PROGSTUDI'];
 
                     # GET JUMLAH TAGIHAN
 
                     foreach ($tagihan as $keys => $values) {
                         
                         # ADD JUMLAH TAGINAN
-                        if ($angkatan == $values['ANGKATAN'] && $semester == $values['SEMESTER'] && $akademik == $values['AKADEMIK']) {
+                        if ($angkatan == $values['ANGKATAN'] && $semester == $values['SEMESTER'] && $akademik == $values['AKADEMIK'] && $prodi == $values['KODE_PROGSTUDI']) {
+                            $mahasiswa[$key]['TAGIHAN'] = $values['JUMLAH'] - $value['POTONGAN'];
+
+                            # GET JUMLAH BAYARAN DI SEMESTER INI
+
+                            $pembayaran = MMutasi::where('NIM', $nim)->where('SEMESTER', $semester)->where('TAHUN', $akademik)->sum('JUMLAH');
+                            
+                            if ($pembayaran >= $values['JUMLAH'] - $value['POTONGAN']) {
+                                $mahasiswa[$key]['STATUS_PEMBAYARAN'] = 'LUNAS'; 
+                            }else{
+                                $mahasiswa[$key]['STATUS_PEMBAYARAN'] = 'BELUM LUNAS';
+                            }
+
+                            $mahasiswa[$key]['PEMBAYARAN'] = $pembayaran;
+
+                            break;
+                        }else{
+                            $mahasiswa[$key]['TAGIHAN'] = 0;
+                            $mahasiswa[$key]['STATUS_PEMBAYARAN'] = ''; 
+                            $mahasiswa[$key]['PEMBAYARAN'] = 0;
+                        }
+
+                    }
+                }elseif ($value['STATUS'] == 2) {
+                    $mahasiswa[$key]['STATUS'] = 2;
+
+                    $nim      = $value['NIM'];
+                    $angkatan = $value['ANGKATAN'];
+                    $semester = $value['SEMESTER'];
+                    $akademik = $value['AKADEMIK'];
+                    $prodi    = $value['KODE_PROGSTUDI'];
+
+                    # GET JUMLAH TAGIHAN
+
+                    foreach ($tagihan as $keys => $values) {
+                        
+                        # ADD JUMLAH TAGINAN
+                        if ($angkatan == $values['ANGKATAN'] && $semester == $values['SEMESTER'] && $akademik == $values['AKADEMIK'] && $prodi == $values['KODE_PROGSTUDI']) {
                             $mahasiswa[$key]['TAGIHAN'] = $values['JUMLAH'] - $value['POTONGAN'];
 
                             # GET JUMLAH BAYARAN DI SEMESTER INI
@@ -150,9 +188,6 @@ class Mahasiswa extends Controller
                             }
 
                             $mahasiswa[$key]['PEMBAYARAN'] = $pembayaran; 
-
-
-                            // return $pembayaran;
 
                             break;
                         }else{

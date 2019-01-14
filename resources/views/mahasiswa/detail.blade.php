@@ -51,6 +51,7 @@
                                             <option> </option>
                                             <option value="1" {{ $result['STATUS'] == '1' ? "selected" : "" }}>Aktif</option>
                                             <option value="0" {{ $result['STATUS'] == '0' ? "selected" : "" }}>Tidak Aktif</option>
+                                            <option value="2" {{ $result['STATUS'] == '2' ? "selected" : "" }}>Lulus</option>
                                         </select>
                                     </div>
                                 </div>

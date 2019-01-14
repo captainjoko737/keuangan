@@ -61,6 +61,18 @@
 
                                 <div class="col-md-12">
                                     <div class="form-group">
+                                        <h5>KODE PROGRAM STUDI</h5>
+                                        <select class="select2 form-control custom-select" name="kode_prodi" style="width: 30%; height:56px;" required>
+                                            <option> </option>
+                                            @foreach ($prodi as $key => $value)
+                                                <option value="{{ $value->KODE_PROGSTUDI }}" {{ $result['KODE_PROGSTUDI'] == $value['KODE_PROGSTUDI'] ? "selected" : "" }}>{{ $value->KODE_PROGSTUDI }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
                                         <h5>JUMLAH TAGIHAN</h5>
                                         <input type="text" id="id" name="id" class="form-control" hidden style="width: 30%; height:56px;" placeholder="Jumlah Tagihan" value="{{ $result->id }}">
                                         <input type="text" id="jumlah" name="jumlah" class="form-control" style="width: 30%; height:56px;" placeholder="Jumlah Tagihan" value="{{ $result->JUMLAH }}">

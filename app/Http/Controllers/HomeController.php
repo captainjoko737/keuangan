@@ -44,6 +44,7 @@ class HomeController extends Controller
         
         $mhsAktif = 0;
         $mhsTidakAktif = 0;
+        $mhsLulus = 0;
         $mhsSudahBayar = 0;
         $mhsBelumBayar = 0;
 
@@ -92,6 +93,45 @@ class HomeController extends Controller
                     }
 
                 }
+            }elseif ($value['STATUS'] == 2) {
+
+                $mhsLulus += 1;
+                $mahasiswaResult[$key]['STATUS'] = 2;
+
+                $nim      = $value['NIM'];
+                $angkatan = $value['ANGKATAN'];
+                $semester = $value['SEMESTER'];
+                $akademik = $value['AKADEMIK'];
+
+                # GET JUMLAH TAGIHAN
+
+                foreach ($tagihan as $keys => $values) {
+                    
+                    # ADD JUMLAH TAGINAN
+                    if ($angkatan == $values['ANGKATAN'] && $semester == $values['SEMESTER'] && $akademik == $values['AKADEMIK']) {
+
+                        $mahasiswaResult[$key]['TAGIHAN'] = $values['JUMLAH'] - $value['POTONGAN'];
+
+                        # GET JUMLAH BAYARAN DI SEMESTER INI
+
+                        $pembayaran = MMutasi::where('NIM', $nim)->where('SEMESTER', $semester)->where('TAHUN', $akademik)->sum('JUMLAH');
+
+                        if ($pembayaran >= $values['JUMLAH'] - $value['POTONGAN']) {
+                            $mahasiswaResult[$key]['STATUS_PEMBAYARAN'] = 'LUNAS'; 
+                        }else{
+                            $mahasiswaResult[$key]['STATUS_PEMBAYARAN'] = 'BELUM LUNAS';
+                        }
+
+                        $mahasiswaResult[$key]['PEMBAYARAN'] = $pembayaran; 
+// return $pembayaran;
+                        break;
+                    }else{
+                        $mahasiswaResult[$key]['TAGIHAN'] = 0;
+                        $mahasiswaResult[$key]['STATUS_PEMBAYARAN'] = ''; 
+                        $mahasiswaResult[$key]['PEMBAYARAN'] = 0;
+                    }
+
+                }
             }else{
                 $mhsTidakAktif += 1;
                 $mahasiswaResult[$key]['STATUS'] = 0;
@@ -108,14 +148,27 @@ class HomeController extends Controller
                 if ($value['STATUS_PEMBAYARAN'] == 'LUNAS') {
                     $mhsSudahBayar += $value['PEMBAYARAN'];
                 }else{
+                    $mhsSudahBayar += $value['PEMBAYARAN'];
+                    $mhsBelumBayar += $value['TAGIHAN'] - $value['PEMBAYARAN'];
+                }
+            }elseif ($value['STATUS'] == 2) {
+                // return $value;
+                if ($value['STATUS_PEMBAYARAN'] == 'LUNAS') {
+                    $mhsSudahBayar += $value['PEMBAYARAN'];
+                }else{
+                    $mhsSudahBayar += $value['PEMBAYARAN'];
                     $mhsBelumBayar += $value['TAGIHAN'] - $value['PEMBAYARAN'];
                 }
             }
 
         }
 
+// return $mhsSudahBayar;
+
+
         $data['mahasiswa_aktif'] = $mhsAktif;
         $data['mahasiswa_tidak_aktif'] = $mhsTidakAktif;
+        $data['mahasiswa_lulus'] = $mhsLulus;
         $data['mahasiswa_sudah_bayar'] = $mhsSudahBayar;
         $data['mahasiswa_belum_bayar'] = $mhsBelumBayar;
 

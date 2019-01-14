@@ -114,6 +114,8 @@
                         <td>AKTIF</td>
                     @elseif ($value['STATUS'] == 0)
                         <td>TIDAK AKTIF</td>
+                    @elseif ($value['STATUS'] == 2)
+                        <td>LULUS</td>
                     @endif
                     
                     @if ($value['POTONGAN'] == null)

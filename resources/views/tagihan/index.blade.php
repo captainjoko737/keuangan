@@ -34,6 +34,7 @@
                                         <th>ANGKATAN</th>
                                         <th>SEMESTER</th>
                                         <th>AKADEMIK</th>
+                                        <th>PROGRAM STUDI</th>
                                         <th>JUMLAH</th>
                                         <th>AKSI</th>
                                     </tr>
@@ -44,6 +45,7 @@
                                         <th>ANGKATAN</th>
                                         <th>SEMESTER</th>
                                         <th>AKADEMIK</th>
+                                        <th>PROGRAM STUDI</th>
                                         <th>JUMLAH</th>
                                         <th>AKSI</th>
                                     </tr>
@@ -55,6 +57,7 @@
                                             <td>{{ $value['ANGKATAN'] }}</td>
                                             <td>{{ $value['SEMESTER'] }}</td>
                                             <td>{{ $value['AKADEMIK'] }}</td>
+                                            <td>{{ $value['prodi']['NAMA_PROGSTUDI'] }}</td>
                                             <td>Rp. {{ number_format($value['JUMLAH'], 2) }}</td>
                                             <td>
                                                 <a href="{{ route('tagihan.edit', ['id' => $value->id]) }}" data-toggle="tooltip" data-original-title="Edit" > <i class="fa fa-pencil text-inverse m-r-10"></i> </a>

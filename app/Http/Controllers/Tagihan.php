@@ -22,9 +22,11 @@ class Tagihan extends Controller
     
     public function index() {
     	
-    	$data['result'] = MTagihan::all();
+    	$data['result'] = MTagihan::with('prodi')->get();
 
     	$data['title'] = 'Tagihan';
+
+        // return $data;
 
     	return view('tagihan.index', $data);
 
@@ -38,6 +40,8 @@ class Tagihan extends Controller
     	$data['akademik'] = MMahasiswa::distinct('AKADEMIK')->select('AKADEMIK')->orderBy('AKADEMIK', 'DESC')->get();
     	$data['semester'] = MMahasiswa::distinct('SEMESTER')->select('SEMESTER')->orderBy('SEMESTER', 'ASC')->get();
 
+        $data['prodi']    = MProgramStudi::all();
+
     	return view('tagihan.add', $data);
 
     }
@@ -47,6 +51,7 @@ class Tagihan extends Controller
     	$tagihan = MTagihan::where('ANGKATAN',request()->angkatan)
     					->where('SEMESTER',request()->semester)
     					->where('AKADEMIK',request()->akademik)
+                        ->where('KODE_PROGSTUDI',request()->kode_prodi)
     					->first();
 
     	if (!$tagihan) {
@@ -54,7 +59,8 @@ class Tagihan extends Controller
 	    		'ANGKATAN' 	=> request()->angkatan, 
 	    		'SEMESTER' 	=> request()->semester,
 	    		'JUMLAH' 	=> request()->jumlah, 
-	    		'AKADEMIK' 	=> request()->akademik
+	    		'AKADEMIK' 	=> request()->akademik,
+                'KODE_PROGSTUDI' => request()->kode_prodi
 	    	]);
 
 	    	session()->flash('status', 'Tagihan berhasil terdaftar!');
@@ -76,6 +82,8 @@ class Tagihan extends Controller
 
     	$data['result'] = MTagihan::where('id', request()->id)->first();
 
+        $data['prodi']    = MProgramStudi::all();
+
     	return view('tagihan.edit', $data);
     	
     	return request()->all();
@@ -86,6 +94,7 @@ class Tagihan extends Controller
     	$tagihan = MTagihan::where('ANGKATAN',request()->angkatan)
     					->where('SEMESTER',request()->semester)
     					->where('AKADEMIK',request()->akademik)
+                        ->where('KODE_PROGSTUDI',request()->kode_prodi)
     					->first();
 
     	if ($tagihan) {
@@ -96,7 +105,8 @@ class Tagihan extends Controller
 				    		'ANGKATAN' 	=> request()->angkatan, 
 				    		'SEMESTER' 	=> request()->semester,
 				    		'JUMLAH' 	=> request()->jumlah, 
-				    		'AKADEMIK' 	=> request()->akademik
+				    		'AKADEMIK' 	=> request()->akademik,
+                            'KODE_PROGSTUDI' => request()->kode_prodi
 				    	]);
 
 		    	session()->flash('status', 'Tagihan berhasil diperbaharui!');

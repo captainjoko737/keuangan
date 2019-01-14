@@ -17,6 +17,7 @@
                         <li><a href="{{ route('laporan.tahun')}}">Per Tahun</a></li>
                         <li><a href="{{ route('laporan.kasir')}}">Per Kasir</a></li>
                         <li><a href="{{ route('laporan.jenis_transaksi')}}">Per Jenis Transaksi</a></li>
+                        <li><a href="{{ route('laporan.rekapitulasi')}}">Rekapitulasi</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ url('/mahasiswa')}}"><i class="fa fa-users"></i> Mahasiswa</a></li>

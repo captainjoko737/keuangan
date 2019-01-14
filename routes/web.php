@@ -94,6 +94,15 @@ Route::group(['middleware' => 'web'], function () {
 			Route::get('/print', 'JenisTransaksi@laporan')->name('laporan.jenis_transaksi.print');
 		});
 
+		# LAPORAN REKAPITULASI
+		Route::group(['prefix' => 'rekapitulasi'], function() {
+			Route::get('/', 'Rekapitulasi@index')->name('laporan.rekapitulasi');
+			Route::post('/', 'Rekapitulasi@laporan')->name('laporan.rekapitulasi.result');
+			Route::get('/print', 'Rekapitulasi@laporan')->name('laporan.rekapitulasi.print');
+		});
+
+
+
 		
 	});
 	
