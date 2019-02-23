@@ -63,7 +63,7 @@ h5{
     <center><img src="{{ base_path() }}/public/images/header.jpg" alt="" width="75%"> </center>
     <hr>
     <pre>
-NAMA USER/KASIR     :  {{ $request['jenis_transaksi'] }}
+JENIS TRANSAKSI     :  {{ $request['jenis_transaksi'] }}
 PERIODE             :  {{ $request['date_from'] }} s/d {{ $request['date_to'] }} 
     </pre> 
         
@@ -72,17 +72,26 @@ PERIODE             :  {{ $request['date_from'] }} s/d {{ $request['date_to'] }}
       <table>
         <tr>
             <th style="width:5%;">No.</th>
-            <th>Jenis Transaksi</th>
+            <th>Nama</th>
+            <th>NIM</th>
+            <th>Tanggal</th>
+            <th>No. Kwitansi</th>
             <th style="width:30%;">Nilai Transaksi</th>
         </tr>
         @foreach ($value['result'] as $keys => $values)
           <tr>
               <td>{{ $keys + 1 }}</td>
-              <td>{{ $values['JNS_TRANS'] }}</td>
+              <td>{{ $values['NAMA'] }}</td>
+              <td>{{ $values['NIM'] }}</td>
+              <td>{{ $values['TGL_TRANS']->format('d M Y') }}</td>
+              <td>{{ $values['NO_KWITANSI'] }}</td>
               <td align="right">{{ number_format($values['JUMLAH'], 2) }}</td>
           </tr>
         @endforeach
         <tr>
+            <td></td>
+            <td></td>
+            <td></td>
             <td></td>
             <th>Jumlah Total</th>
             <th align="right">Rp. {{ number_format($value['total'], 2) }}</th>
