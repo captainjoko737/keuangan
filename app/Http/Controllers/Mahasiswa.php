@@ -123,7 +123,7 @@ class Mahasiswa extends Controller
 
             foreach ($mahasiswa as $key => $value) {
 
-                if ($value['STATUS'] == 1) {
+                if ($value['STATUS'] == 1) {    # AKTIF
                     $mahasiswa[$key]['STATUS'] = 1;
 
                     $nim      = $value['NIM'];
@@ -146,8 +146,10 @@ class Mahasiswa extends Controller
                             
                             if ($pembayaran >= $values['JUMLAH'] - $value['POTONGAN']) {
                                 $mahasiswa[$key]['STATUS_PEMBAYARAN'] = 'LUNAS'; 
+                                $mahasiswa[$key]['TUNGGAKAN'] = 0;
                             }else{
                                 $mahasiswa[$key]['STATUS_PEMBAYARAN'] = 'BELUM LUNAS';
+                                $mahasiswa[$key]['TUNGGAKAN'] = $mahasiswa[$key]['TAGIHAN'] - $pembayaran;
                             }
 
                             $mahasiswa[$key]['PEMBAYARAN'] = $pembayaran;
@@ -157,10 +159,11 @@ class Mahasiswa extends Controller
                             $mahasiswa[$key]['TAGIHAN'] = 0;
                             $mahasiswa[$key]['STATUS_PEMBAYARAN'] = ''; 
                             $mahasiswa[$key]['PEMBAYARAN'] = 0;
+                            $mahasiswa[$key]['TUNGGAKAN'] = 0;
                         }
 
                     }
-                }elseif ($value['STATUS'] == 2) {
+                }elseif ($value['STATUS'] == 2) { # LULUS
                     $mahasiswa[$key]['STATUS'] = 2;
 
                     $nim      = $value['NIM'];
@@ -183,8 +186,10 @@ class Mahasiswa extends Controller
                             
                             if ($pembayaran >= $values['JUMLAH'] - $value['POTONGAN']) {
                                 $mahasiswa[$key]['STATUS_PEMBAYARAN'] = 'LUNAS'; 
+                                $mahasiswa[$key]['TUNGGAKAN'] = 0;
                             }else{
                                 $mahasiswa[$key]['STATUS_PEMBAYARAN'] = 'BELUM LUNAS';
+                                $mahasiswa[$key]['TUNGGAKAN'] = $mahasiswa[$key]['TAGIHAN'] - $pembayaran;
                             }
 
                             $mahasiswa[$key]['PEMBAYARAN'] = $pembayaran; 
@@ -194,12 +199,14 @@ class Mahasiswa extends Controller
                             $mahasiswa[$key]['TAGIHAN'] = 0;
                             $mahasiswa[$key]['STATUS_PEMBAYARAN'] = ''; 
                             $mahasiswa[$key]['PEMBAYARAN'] = 0;
+                            $mahasiswa[$key]['TUNGGAKAN'] = 0;
                         }
 
                     }
-                }else{
+                }else{      # TIDAK AKTIF
                     $mahasiswa[$key]['STATUS'] = 0;
                     $mahasiswa[$key]['TAGIHAN'] = 0;
+                    $mahasiswa[$key]['TUNGGAKAN'] = 0;
                 }
 
             }
