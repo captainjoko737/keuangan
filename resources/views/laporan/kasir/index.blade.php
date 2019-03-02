@@ -93,14 +93,22 @@
 		                                    <thead>
 		                                        <tr>
 		                                            <th style="width:5%;">No.</th>
+		                                            <th>Nama</th>
+		                                            <th>NIM</th>
+		                                            <th>Tanggal</th>
+		                                            <th>No. Kwitansi</th>
 		                                            <th>Jenis Transaksi</th>
-		                                            <th width="30%">Nilai Transaksi</th>
+		                                            <th>Nilai Transaksi</th>
 		                                        </tr>
 		                                    </thead>
 		                                    <tbody>
 		                                    	@foreach ($value['result'] as $keys => $values)
 			                                    	<tr>
 				                                        <td>{{ $keys +1 }}</td>
+				                                        <td>{{ $values['NAMA'] }}</td>
+				                                        <td>{{ $values['NIM'] }}</td>
+				                                        <td>{{ $values['TGL_TRANS'] }}</td>
+				                                        <td>{{ $values['NO_KWITANSI'] }}</td>
 				                                        <td>{{ $values['JNS_TRANS'] }}</td>
 				                                        <td>Rp. {{ number_format($values['JUMLAH'], 2) }}</td>
 			                                      	<tr>

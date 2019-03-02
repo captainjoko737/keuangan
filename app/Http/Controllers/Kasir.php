@@ -51,6 +51,7 @@ class Kasir extends Controller
     	$mutasi = MTransaksi::where('transaksi.PENGGUNA', $request['nama'])
     					->join('mutasi', 'mutasi.NO_KWITANSI', '=', 'transaksi.NO_KWITANSI')
     					->join('jns_transaksi', 'jns_transaksi.jns_trans', '=', 'mutasi.JNS_TRANS')
+    					->join('mahasiswa', 'mahasiswa.NIM', '=', 'transaksi.NIM')
     					->whereBetween('transaksi.TGL_TRANS', [$dateFrom, $dateTo])
     					->get();
 
@@ -81,17 +82,20 @@ class Kasir extends Controller
 
 		$sub = [];
 
-		foreach ($res as $key => $value) {
-			array_push($sub, $value);
+		if (isset($res)) {
+			foreach ($res as $key => $value) {
+				array_push($sub, $value);
+			}
 		}
 
 		$data['result'] = $sub;
 
 		if ($request->state == 'result') {
+			// return $data;
 			return view('laporan.kasir.index', $data);
 		}else{
 			$pdf = PDF::loadView('laporan.kasir.print', $data);
-	        $pdf->setPaper('A4', 'potrait');
+	        $pdf->setPaper('A4', 'landscape');
 	        return $pdf->stream('laporan.pdf');
 		}
 
