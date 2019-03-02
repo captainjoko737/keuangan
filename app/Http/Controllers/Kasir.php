@@ -81,17 +81,19 @@ class Kasir extends Controller
 		}
 
 		$sub = [];
+		$jumlahRaya = 0;
 
 		if (isset($res)) {
 			foreach ($res as $key => $value) {
+				$jumlahRaya += $value['total'];
 				array_push($sub, $value);
 			}
 		}
 
+		$data['jumlah_raya'] = $jumlahRaya;
 		$data['result'] = $sub;
 
 		if ($request->state == 'result') {
-			// return $data;
 			return view('laporan.kasir.index', $data);
 		}else{
 			$pdf = PDF::loadView('laporan.kasir.print', $data);

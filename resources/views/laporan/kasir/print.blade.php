@@ -100,8 +100,79 @@ PERIODE             :  {{ $request['date_from'] }} s/d {{ $request['date_to'] }}
             <th align="right">Rp. {{ number_format($value['total'], 2) }}</th>
         </tr>
       </table>
+
     @endforeach
-  
+
+    <br>
+    <table>
+      <tr>
+         
+          <th align="right">Jumlah Raya</th>
+          <th style="width:30%;" align="right">Rp. {{ number_format($jumlah_raya, 2) }}</th>
+      </tr>
+    </table>
+
+    <br>
+
+    <table id="t01">
+      <tr>
+          <th align="center">Sudah diperiksa</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th align="center">Sudah diperiksa</th>
+      </tr>
+
+      @if ($request['nama'] == 'DJUDJU DJUHANA')
+        <tr>
+            <th align="center">Kabag. Keuangan</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th align="center">Staff IT FKIP</th>
+        </tr>
+      @else
+        <tr>
+            <th align="center">Kasir FKIP</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th align="center">Staff IT FKIP</th>
+        </tr>
+      @endif
+
+      @for ($i = 0; $i < 6; $i++)
+          <tr>
+              <th align="center"></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th align="center"></th>
+          </tr>
+      @endfor
+
+      <tr>
+          <th align="center">{{ $request['nama'] }}  </th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th align="center">M Rifki Ridwanullah</th>
+      </tr>
+
+    </table>
+    
+
+
 <div id="footer">
   <div class="page-number"></div>
 </div>

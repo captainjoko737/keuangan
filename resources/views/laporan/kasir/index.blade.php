@@ -130,6 +130,21 @@
 	                        </div>
 	                    </div>
 	                @endif
+	                @if ($result)
+	                <div class="card">
+	                    <div class="card-body">
+		                    <table class="table color-bordered-table inverse-bordered-table">
+		                    	<thead>
+		                            <tr>
+		                                <th></th>
+		                                <th>Jumlah Raya</th>
+		                                <th width="30%">Rp. {{ number_format($jumlah_raya, 2) }}</th>
+		                            </tr>
+		                        </thead>
+		                    </table>
+		                </div>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
