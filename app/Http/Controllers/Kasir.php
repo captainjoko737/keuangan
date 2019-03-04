@@ -28,6 +28,8 @@ class Kasir extends Controller
 
     	$data['kasir'] = MPengguna::select('NAMA')->get();
 
+    	$data['result'] = [];
+    	
     	return view('laporan.kasir.index', $data);
     }
 
@@ -94,6 +96,7 @@ class Kasir extends Controller
 		$data['result'] = $sub;
 
 		if ($request->state == 'result') {
+
 			return view('laporan.kasir.index', $data);
 		}else{
 			$pdf = PDF::loadView('laporan.kasir.print', $data);
