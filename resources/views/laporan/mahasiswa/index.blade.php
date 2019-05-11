@@ -119,6 +119,17 @@
 		                                </table>
 		                            </div>
 		                        @endforeach
+		                        <h4 class="card-title">TOTAL KESELURUHAN</h4>
+		                        <div class="table-responsive">
+		                                <table class="table color-bordered-table inverse-bordered-table">
+		                                    <thead>
+		                                        <tr>
+		                                            <th>Rp. {{ number_format($total_keseluruhan, 2) }}</th> 
+		                                        </tr>
+		                                    </thead>
+		                                    
+		                                </table>
+		                            </div>
 	                        </div>
 	                    </div>
 	                @endif

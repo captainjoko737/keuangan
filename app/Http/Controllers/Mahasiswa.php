@@ -68,6 +68,7 @@ class Mahasiswa extends Controller
 		   	
 		}
 
+        $totalKeseluruhan = 0;
 		foreach ($arr as $key => $value) {
 			$sub = [];
 			$total = 0;
@@ -90,10 +91,12 @@ class Mahasiswa extends Controller
 			$suv['title']	= $title;
 			$suv['result'] 	= $sub;
 			$suv['total']	= $total;
+            $totalKeseluruhan += $total;
 			array_push($result, $suv);
 
 		}
-
+// return $totalKeseluruhan;
+        $data['total_keseluruhan'] = $totalKeseluruhan;
 		$data['result'] = $result;
 
 		if ($request->state == 'result') {
